@@ -28,8 +28,8 @@ function includeHTML() {
 
 function togglePage(id) {
     document.getElementById("Home").style.display       = 'none';
-    document.getElementById("Students").style.display   = 'none';
-    document.getElementById("Teacher").style.display    = 'none';
+    document.getElementById("Createpools").style.display   = 'none';
+    document.getElementById("Openpools").style.display    = 'none';
     document.getElementById("Stats").style.display      = 'none';
 
     document.getElementById(id).style.display           = 'block';

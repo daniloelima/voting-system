@@ -37,6 +37,11 @@ button:hover {
   font-size: 16px;
 }
 
+textarea{
+  resize: none;
+}
+
+
 .homepage{
   font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
@@ -125,7 +130,7 @@ button:hover {
     width: 30%
 }
 
-.votantes, .saTurings {
+.votantes, .formdiv {
   display: flex;
   align-items: center;
   flex-direction: column;
