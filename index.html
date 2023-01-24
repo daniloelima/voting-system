@@ -1,0 +1,48 @@
+HTML
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <link rel="stylesheet" href="src/style.css">
+  <title>Turing DApp</title>
+</head>
+
+<body>
+
+  <div class="sidenav">
+    <a href="#home" onclick="togglePage('Home')"><h1>Home Page</h1></a>
+    <a href="#students" onclick="togglePage('Students')">Student</a>
+    <a href="#professor" onclick="togglePage('Teacher')">Teacher</a>
+    <a href="#statistics" onclick="togglePage('Stats')">Statistics</a>
+  </div>
+  
+  <div class="main">
+    <br>
+    <br>
+    <div class="extern">
+      <div class="Home" id="Home">
+        <div w3-include-html="src/home.html"></div>
+      </div>
+      <div class="Students" id="Students">
+        <div w3-include-html="src/student.html"></div>
+      </div>
+      <div class="Teacher" id="Teacher">
+        <div w3-include-html="src/teacher.html"></div>
+      </div>
+      <div class="Stats" id="Stats">
+        <div w3-include-html="src/stats.html"></div>
+      </div>
+    </div>
+  </div>
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+    <script src="src/script.js"></script>
+    <script src="src/contract.js"></script>
+    <script>
+      includeHTML();
+    </script>
+  </body>
+
+</html>
