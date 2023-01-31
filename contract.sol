@@ -1,34 +1,41 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^ 0.8.13;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+struct VoteOption{
+    string opt_title; 
+    string opt_desc;
+    int num_votes; // Number of votes recieved by the option
+}
 
-contract VotingPool is ERC20{
-    string title; 
-    string description;
-    bool status; // define if the pool is open or close to new votes
-    mapping(address => bool) public already_voted; // armazena os endereços que já votaram nessa pool
-
-    struct vote_option{
-        string opt_title; 
-        string opt_desc;
-        int num_votes; // Number of votes recieved by the option
-    }
-
-    vote_option[] options; // opcoes
-
+contract VotePool{
     
+    
+    string title; // define the title of the pool 
+    string description; // define the description of the pool (
+    bool status; // define if the pool is open or close to new votes
+    VoteOption[] options; // opcoes
 
+    constructor(string memory new_title, string memory new_description) {
+        title = new_title;
+        description = new_description;
+        status = true;
+    }
+    function add_option(string memory new_opt_title, string memory new_opt_description) public{
+        VoteOption memory new_option;
+        new_option.opt_title = new_opt_title;
+        new_option.opt_desc = new_opt_description;
+        new_option.num_votes = 0;
 
-    modifier vote_require(address voter, uint256 opt){
-        already_voted[voter] != true; // verifica se é o primeiro voto do endereco
-        opt < len(options); // verifica se a opção de voto existe 
+        options.push(new_option);
+    }
+    
+    modifier vote_require(uint256 opt){
+        opt < options.length; // verifica se a opção de voto existe 
         _;
     }
 
-
-    function vote(uint256 option){
-
+    function vote(uint256 opt) public vote_require(opt){
+        options[opt].num_votes ++;
     }
 
     function changeStatus() public{ // Change the status of the voting pool
@@ -38,22 +45,32 @@ contract VotingPool is ERC20{
             status = false;
         }
     }
-
 }
 
 
-contract VotingSystem is ERC20{
-    address[] pool_list;
-    address[] admins;
+contract VotingSystem{
+    address[] public pool_list; //lista de endereços das pools 
+    mapping (address => VotePool) public pools_map; //mapping do endereço para a variavel
+    mapping (address => bool) public admins;
+
+    constructor(){
+        admins[0x5d84D451296908aFA110e6B37b64B1605658283f] = true;
+    }
 
     modifier create_require{
-        //so admin pode criar pool
-    }
-
-    function create_pool(String title, String description) public create_require{
-        //msg.sender in admins[] // descobrir como verificar um elemento dentro de array em solidity (ou arranjar outra forma de fazer)
+        require(admins[msg.sender] = true, "O usuario nao e um administrador."); //so admin pode criar pool
         _;
     }
+
+    function create_pool(string memory title, string memory description, VoteOption[] memory options) public create_require{
+        VotePool new_pool = new VotePool(title, description);
+
+        for (uint256 i = 0; i < options.length; i++) {
+            new_pool.add_option(options[i].opt_title, options[i].opt_desc);
+        }
+        //msg.sender in admins[] // descobrir como verificar um elemento dentro de array em solidity (ou arranjar outra forma de fazer)
+    }
+
 
     // mapping(string => mapping(string => bool)) public already_voted;
     
