@@ -30,7 +30,7 @@ contract VotePool{
     }
     
     modifier vote_require(uint256 opt){
-        opt < options.length; // verifica se a opção de voto existe 
+        require(opt < options.length); // verifica se a opção de voto existe 
         _;
     }
 
@@ -57,20 +57,36 @@ contract VotingSystem{
         admins[0x5d84D451296908aFA110e6B37b64B1605658283f] = true;
     }
 
-    modifier create_require{
+    modifier admin_require{
         require(admins[msg.sender] = true, "O usuario nao e um administrador."); //so admin pode criar pool
         _;
     }
 
-    function create_pool(string memory title, string memory description, VoteOption[] memory options) public create_require{
+    function change_admin_status(address new_admin) public admin_require{
+        if(admins[new_admin] = true){
+            admins[new_admin] = false;
+        }else{
+            admins[new_admin] = true;
+        }
+    }
+
+    // FUNCTIONS OF CONTRACT FACTORY
+
+    function create_pool(string memory title, string memory description, VoteOption[] memory options) public admin_require{
         VotePool new_pool = new VotePool(title, description);
 
         for (uint256 i = 0; i < options.length; i++) {
             new_pool.add_option(options[i].opt_title, options[i].opt_desc);
         }
-        //msg.sender in admins[] // descobrir como verificar um elemento dentro de array em solidity (ou arranjar outra forma de fazer)
     }
 
+    function return_pool(address pool_addr) public {
+
+    }
+
+    function add_vote(address pool_addr, uint256 opt){
+        options.vote(opt);
+    }
 
     // mapping(string => mapping(string => bool)) public already_voted;
     
