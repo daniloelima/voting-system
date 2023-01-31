@@ -9,11 +9,10 @@ struct VoteOption{
 
 contract VotePool{
     
-    
-    string title; // define the title of the pool 
-    string description; // define the description of the pool (
-    bool status; // define if the pool is open or close to new votes
-    VoteOption[] options; // opcoes
+    string public title; // define the title of the pool 
+    string public description; // define the description of the pool (
+    bool public status; // define if the pool is open or close to new votes
+    VoteOption[] public options; // opcoes
 
     constructor(string memory new_title, string memory new_description) {
         title = new_title;
@@ -80,53 +79,21 @@ contract VotingSystem{
         }
     }
 
-    function return_pool(address pool_addr) public {
-
+    function add_vote(address pool_addr, uint256 opt) public{
+        pools_map[pool_addr].vote(opt);
     }
 
-    function add_vote(address pool_addr, uint256 opt){
-        options.vote(opt);
+    function return_pool(address pool_addr) public view returns(string memory, string memory, bool, VoteOption[] memory){
+        VotePool rpool = VotePool(pools_map[pool_addr]);
+        
+        string memory rtitle = rpool.title();
+        string memory rdesc = rpool.description();
+        bool rstatus = rpool.status();
+
+
+        VoteOption[] memory roptions = rpool.options();
+
+        return(rtitle, rdesc, rstatus, roptions);
     }
 
-    // mapping(string => mapping(string => bool)) public already_voted;
-    
-    // mapping(string => address) public address_map;
-    // mapping(address => string) public codiname_map;
-
-    // constructor() ERC20("VotingSystem", "VSYS"){
-    //     voting = true;
-    //     owner = msg.sender;
-    //     prof = 0xA5095296F7fF9Bdb01c22e3E0aC974C8963378ad;
-    //     // prof = 0x5d84D451296908aFA110e6B37b64B1605658283f; // test danilo prof
-    // }
-    
-    // modifier onlyProf {
-    //     require(msg.sender == prof);
-    //     _;
-    // }
-
-    // modifier voteEspecifications(string memory receptor, uint256 qtd_sa_Turings) {
-    //     require(voting);                                                                //verifica se a votação esta aberta
-    //     require(address_map[receptor] != 0x0000000000000000000000000000000000000000);   //verifica se o receptor é válido 
-    //     require(bytes(codiname_map[msg.sender]).length > 0);                            //verifica se o sender é valido
-    //     require(qtd_sa_Turings < 2*10**18 && qtd_sa_Turings > 0);                       //verifica se a quantidade de turings está adequada
-    //     require(address_map[receptor] != msg.sender);                                   //verifica se o receptor não é o mesmo que quem enviou
-    //     require(already_voted[codiname_map[msg.sender]][receptor] != true);             //verifica se sender ja votou no receptor
-    //     _;
-    // }
-
-    // function issueToken(address receptor_voto, uint256 qtd_sa_Turings) public onlyProf{ 
-    //     _mint(receptor_voto, qtd_sa_Turings); // Cria a quantidade de turings para o receptor
-    // }
-    
-    // function endVoting() public onlyProf{ 
-    //     voting = false; // Encerra a votação
-    // }
-
-    // function vote(string memory receptor, uint256 qtd_sa_Turings) public voteEspecifications(receptor, qtd_sa_Turings){
-    //     _mint(msg.sender, 2 * 10**17); // Retorna os 0,2 Turings para quem enviou o voto
-    //     _mint(address_map[receptor], qtd_sa_Turings); // Cria a quantidade de turings para o receptor
-
-    //     already_voted[codiname_map[msg.sender]][receptor] = true; //TODO atualizar lista de usuarios votados
-    // }
 }
