@@ -41,8 +41,37 @@ textarea{
   resize: none;
 }
 
+.openbutton {
+  font: bold 11px Arial;
+  text-decoration: none;
+  background-color: #EEEEEE;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+}
 
-.homepage{
+.poolslist{
+  width: 50vw;
+  padding: 5em;
+}
+
+.pool{
+  border-radius: 10px;
+  border: 1px solid black;
+  padding: 3em;
+  margin: 1em;
+  background-color: #AAFFC6;
+}
+
+.pooltitle, .pooldesc{
+  font-size: 30px;
+}
+
+
+.homepage, .openpools{
   font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 

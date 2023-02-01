@@ -1,9 +1,9 @@
 // 1. Declare global variable to store the smart contract instance
-let TuringContract;
+let SystemContract;
 
 // 2. Set contract address and ABI
-const tContract_Address = "0x1B1a95Be9A2ad8b3FdC5a67E87dF7256FE02bb93";
-const tContract_ABI = [
+const System_Contract_Address = "0x1B1a95Be9A2ad8b3FdC5a67E87dF7256FE02bb93";
+const System_Contract_ABI = [
 	{
 		"inputs": [],
 		"stateMutability": "nonpayable",
@@ -406,13 +406,56 @@ provider.send("eth_requestAccounts", []).then(() => {
     const signer = provider.getSigner(accounts[0]);
 
     /* 3.1 Create instance of pet smart contract */
-    TuringContract = new ethers.Contract(
-      tContract_Address,
-      tContract_ABI,
+    SystemContract = new ethers.Contract(
+      System_Contract_Address,
+      System_Contract_ABI,
       signer
     );
   });
 });
+
+const createNewPool = () => {
+	//test
+
+	var ptitle = document.getElementsByName("#ptitle")[0];
+
+	console.log("teste", ptitle.value);
+	// endtest
+
+    // const pool_title = document.querySelector("#ptitle").value;
+	// const pool_desc  = document.querySelector("#pdesc").value;
+
+    // const opt1_title = document.querySelector("#title1").value;
+    // const opt1_desc  = document.querySelector("#desc1").value;
+	// const opt2_title = document.querySelector("#title2").value;
+    // const opt2_desc  = document.querySelector("#desc2").value;
+	// const opt3_title = document.querySelector("#title3").value;
+    // const opt3_desc  = document.querySelector("#desc3").value;
+    // const optionslist = [
+	// 	{
+    //         opt_title: opt1_title,
+	// 		opt_desc: opt1_desc
+    //     },
+	// 	{
+    //         opt_title: opt2_title,
+	// 		opt_desc: opt2_desc
+    //     },
+	// 	{
+    //         opt_title: opt3_title,
+	// 		opt_desc: opt3_desc
+    //     }
+    // ];
+    
+    // console.log("Title:", pool_title, "Desc", pool_desc, "options", optionslist);
+    
+	
+	// SystemContract.create_pool(pool_title, pool_desc, optionslist)
+	// 	.then(() => {
+    //     	alert("Processando Voto...");
+	// 	}).catch((err) => {
+	// 		alert("Error voting" + err.message);
+    //     });
+};
 
 
 /* 4. realize a new vote */
@@ -472,15 +515,7 @@ const endVoting = () => {
         });
 };
 
-// var ammount_value = 0;
 
-// /* 7. Function to get pet details */
-// const getStudentTuring = async (addr) => {
-// 	/* 6.1 Get pet details from smart contract */
-// 	try {
-// 		const ammount = await TuringContract.balanceOf(addr);
-// 		ammount_value = ammount;
-// 	} catch (error) {
-// 		alert("Erro geting turings");
-// 	}
-// };
+
+
+
