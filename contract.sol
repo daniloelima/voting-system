@@ -36,7 +36,12 @@ contract VotePool{
         _;
     }
 
-    function vote(uint256 opt) public opt_require(opt){
+    modifier status_require(){
+        require(status == true);
+        _;
+    }
+
+    function vote(uint256 opt) public opt_require(opt) status_require{
         options[opt].num_votes ++;
     }
 
@@ -90,12 +95,16 @@ contract VotingSystem{
 
     // FUNCTIONS OF CONTRACT FACTORY
 
+    // Exemplo para chamada da funcao:
+    // titulo teste, desc teste, [[opt_title:'opt1name',desc_title:'desc1',0],[opt_titile:'opt2',desc_title:'desc2',0]]  
     function create_pool(string memory title, string memory description, VoteOption[] memory options) public admin_require{
         VotePool new_pool = new VotePool(title, description);
 
         for (uint256 i = 0; i < options.length; i++) {
             new_pool.add_option(options[i].opt_title, options[i].opt_desc);
         }
+
+        //adicionar new pool em pool_list e pools_map
     }
 
     function add_vote(address pool_addr, uint256 opt) public{
