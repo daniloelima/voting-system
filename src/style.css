@@ -53,22 +53,6 @@ textarea{
   border-left: 1px solid #CCCCCC;
 }
 
-.poolslist{
-  width: 50vw;
-  padding: 5em;
-}
-
-.pool{
-  border-radius: 10px;
-  border: 1px solid black;
-  padding: 3em;
-  margin: 1em;
-  background-color: #AAFFC6;
-}
-
-.pooltitle, .pooldesc{
-  font-size: 30px;
-}
 
 
 .homepage, .openpools{
