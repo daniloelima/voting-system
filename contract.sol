@@ -13,11 +13,13 @@ contract VotePool{
     string public description; // define the description of the pool (
     bool public status; // define if the pool is open or close to new votes
     VoteOption[] public options; // opcoes
+    uint public len_options;
 
     constructor(string memory new_title, string memory new_description) {
         title = new_title;
         description = new_description;
         status = true;
+        len_options = 0;
     }
     function add_option(string memory new_opt_title, string memory new_opt_description) public{
         VoteOption memory new_option;
@@ -26,16 +28,29 @@ contract VotePool{
         new_option.num_votes = 0;
 
         options.push(new_option);
+        len_options = options.length; //atualiza a variavel com a quantidade de options
     }
     
-    modifier vote_require(uint256 opt){
-        require(opt < options.length); // verifica se a opção de voto existe 
+    modifier opt_require(uint256 opt){
+        require(opt < len_options); // verifica se a opção de voto existe 
         _;
     }
 
-    function vote(uint256 opt) public vote_require(opt){
+    function vote(uint256 opt) public opt_require(opt){
         options[opt].num_votes ++;
     }
+
+
+    // FAZER UM RETURN OPTIONS CONFORME CODIGO A FONTE https://blog.finxter.com/how-to-return-an-array-of-structs-in-solidity/
+    function return_options() public view returns (VoteOption[] memory){
+        VoteOption[] memory id = new VoteOption[](len_options);
+        for (uint i = 0; i < len_options; i++) {
+            VoteOption storage opt = options[i];
+            id[i] = opt;
+        }
+        return id;
+    }
+
 
     function changeStatus() public{ // Change the status of the voting pool
         if (status == false){
@@ -44,6 +59,8 @@ contract VotePool{
             status = false;
         }
     }
+
+    
 }
 
 
@@ -54,6 +71,8 @@ contract VotingSystem{
 
     constructor(){
         admins[0x5d84D451296908aFA110e6B37b64B1605658283f] = true;
+        //teste admins
+        admins[0x5B38Da6a701c568545dCfcB03FcB875f56beddC4] = true;
     }
 
     modifier admin_require{
@@ -89,9 +108,9 @@ contract VotingSystem{
         string memory rtitle = rpool.title();
         string memory rdesc = rpool.description();
         bool rstatus = rpool.status();
+        
+        VoteOption[] memory roptions = rpool.return_options();
 
-
-        VoteOption[] memory roptions = rpool.options();
 
         return(rtitle, rdesc, rstatus, roptions);
     }
