@@ -67,7 +67,7 @@ contract VotePool{
 
     
 }
-
+// ----------------------------------------------------------------------------------------------------------------------------//
 
 contract VotingSystem{
     address[] public pool_list; //lista de endereços das pools 
@@ -98,8 +98,11 @@ contract VotingSystem{
 
     // FUNCTIONS OF CONTRACT FACTORY
 
-    // Exemplo para chamada da funcao:
-    // titulo teste, desc teste, [[opt_title:'opt1name',desc_title:'desc1',0],[opt_titile:'opt2',desc_title:'desc2',0]]  
+
+    /*
+    Exemplo para chamada da funcao:
+    titulo teste, desc teste, [['opt1name','desc1',0],['opt2','desc2',0]]  
+    */
     function create_pool(string memory title, string memory description, VoteOption[] memory options) public admin_require{
         VotePool new_pool = new VotePool(title, description);
 
@@ -115,6 +118,10 @@ contract VotingSystem{
     // require pool addr ta dentro do map
     function add_vote(address pool_addr, uint256 opt) public{
         pools_map[pool_addr].vote(opt);
+    }
+
+    function change_pool_status(address pool_addr) public{
+        pools_map[pool_addr].changeStatus();
     }
 
     function return_pool(address pool_addr) public view returns(string memory, string memory, bool, VoteOption[] memory){
