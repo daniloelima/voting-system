@@ -42,7 +42,7 @@ contract VotePool{
     }
 
     function vote(uint256 opt) public opt_require(opt) status_require{
-        options[opt].num_votes ++;
+       options[opt].num_votes ++;
     }
 
 
@@ -71,13 +71,16 @@ contract VotePool{
 
 contract VotingSystem{
     address[] public pool_list; //lista de endereços das pools 
+    uint public len_pool_list; //tamanho da lista
     mapping (address => VotePool) public pools_map; //mapping do endereço para a variavel
     mapping (address => bool) public admins;
 
+
     constructor(){
+        len_pool_list = 0;
+
         admins[0x5d84D451296908aFA110e6B37b64B1605658283f] = true;
-        //teste admins
-        admins[0x5B38Da6a701c568545dCfcB03FcB875f56beddC4] = true;
+        admins[0x5B38Da6a701c568545dCfcB03FcB875f56beddC4] = true;         //remix teste admins
     }
 
     modifier admin_require{
@@ -104,9 +107,12 @@ contract VotingSystem{
             new_pool.add_option(options[i].opt_title, options[i].opt_desc);
         }
 
-        //adicionar new pool em pool_list e pools_map
+        pool_list.push(address(new_pool)); // adiciona o endereço do contrato na lista
+        len_pool_list++;
+        pools_map[address(new_pool)] = new_pool; // adicionar o map do endereço para a variavel do contrato
     }
 
+    // require pool addr ta dentro do map
     function add_vote(address pool_addr, uint256 opt) public{
         pools_map[pool_addr].vote(opt);
     }
