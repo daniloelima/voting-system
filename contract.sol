@@ -45,8 +45,6 @@ contract VotePool{
        options[opt].num_votes ++;
     }
 
-
-    // FAZER UM RETURN OPTIONS CONFORME CODIGO A FONTE https://blog.finxter.com/how-to-return-an-array-of-structs-in-solidity/
     function return_options() public view returns (VoteOption[] memory){
         VoteOption[] memory id = new VoteOption[](len_options);
         for (uint i = 0; i < len_options; i++) {
@@ -67,7 +65,6 @@ contract VotePool{
 
     
 }
-// ----------------------------------------------------------------------------------------------------------------------------//
 
 contract VotingSystem{
     address[] public pool_list; //lista de endereços das pools 
@@ -79,12 +76,13 @@ contract VotingSystem{
     constructor(){
         len_pool_list = 0;
 
-        admins[0x5d84D451296908aFA110e6B37b64B1605658283f] = true;
-        admins[0x5B38Da6a701c568545dCfcB03FcB875f56beddC4] = true;         //remix teste admins
+        admins[0x5d84D451296908aFA110e6B37b64B1605658283f] = true;  //Danilo
+        admins[0xA5095296F7fF9Bdb01c22e3E0aC974C8963378ad] = true;  //Roberta
+        //admins[0x5B38Da6a701c568545dCfcB03FcB875f56beddC4] = true;         //remix teste admins
     }
 
     modifier admin_require{
-        require(admins[msg.sender] = true, "O usuario nao e um administrador."); //so admin pode criar pool
+        require(admins[msg.sender] == true, "O usuario nao e um administrador."); //so admin pode criar pool
         _;
     }
 
@@ -98,6 +96,7 @@ contract VotingSystem{
 
     // FUNCTIONS OF CONTRACT FACTORY
 
+    event pool_create_confirm(address pool_addr);
 
     /*
     Exemplo para chamada da funcao:
@@ -113,6 +112,8 @@ contract VotingSystem{
         pool_list.push(address(new_pool)); // adiciona o endereço do contrato na lista
         len_pool_list++;
         pools_map[address(new_pool)] = new_pool; // adicionar o map do endereço para a variavel do contrato
+
+        emit pool_create_confirm(address(new_pool));
     }
 
     // require pool addr ta dentro do map
@@ -120,8 +121,11 @@ contract VotingSystem{
         pools_map[pool_addr].vote(opt);
     }
 
-    function change_pool_status(address pool_addr) public{
+    event pool_status_updated();
+
+    function change_pool_status(address pool_addr) public admin_require{
         pools_map[pool_addr].changeStatus();
+        emit pool_status_updated(); // evento que indica que atualizou o status de algum pool
     }
 
     function return_pool(address pool_addr) public view returns(string memory, string memory, bool, VoteOption[] memory){
@@ -132,7 +136,6 @@ contract VotingSystem{
         bool rstatus = rpool.status();
         
         VoteOption[] memory roptions = rpool.return_options();
-
 
         return(rtitle, rdesc, rstatus, roptions);
     }
