@@ -2,235 +2,171 @@
 let SystemContract;
 
 // 2. Set contract address and ABI
-const System_Contract_Address = "0x69f7e3429F5A9d20D7804e681149d7aC20426d21";
+const System_Contract_Address = "0xf57e0EABb62004FF641F72A2cD8ba250b75656B8";
 const System_Contract_ABI = [
 	{
 		"inputs": [
 			{
-				"internalType": "address",
-				"name": "pool_addr",
-				"type": "address"
+				"internalType": "string",
+				"name": "new_title",
+				"type": "string"
 			},
+			{
+				"internalType": "string",
+				"name": "new_description",
+				"type": "string"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "new_opt_title",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "new_opt_description",
+				"type": "string"
+			}
+		],
+		"name": "add_option",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "changeStatus",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "description",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "len_options",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "options",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "opt_title",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "opt_desc",
+				"type": "string"
+			},
+			{
+				"internalType": "int256",
+				"name": "num_votes",
+				"type": "int256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "return_options",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "string",
+						"name": "opt_title",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "opt_desc",
+						"type": "string"
+					},
+					{
+						"internalType": "int256",
+						"name": "num_votes",
+						"type": "int256"
+					}
+				],
+				"internalType": "struct VoteOption[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "status",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "title",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
 			{
 				"internalType": "uint256",
 				"name": "opt",
 				"type": "uint256"
 			}
 		],
-		"name": "add_vote",
+		"name": "vote",
 		"outputs": [],
 		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "new_admin",
-				"type": "address"
-			}
-		],
-		"name": "change_admin_status",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "pool_addr",
-				"type": "address"
-			}
-		],
-		"name": "change_pool_status",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "title",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "description",
-				"type": "string"
-			},
-			{
-				"components": [
-					{
-						"internalType": "string",
-						"name": "opt_title",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "opt_desc",
-						"type": "string"
-					},
-					{
-						"internalType": "int256",
-						"name": "num_votes",
-						"type": "int256"
-					}
-				],
-				"internalType": "struct VoteOption[]",
-				"name": "options",
-				"type": "tuple[]"
-			}
-		],
-		"name": "create_pool",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "pool_addr",
-				"type": "address"
-			}
-		],
-		"name": "pool_create_confirm",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [],
-		"name": "pool_status_updated",
-		"type": "event"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "admins",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "len_pool_list",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "pool_list",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "pools_map",
-		"outputs": [
-			{
-				"internalType": "contract VotePool",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "pool_addr",
-				"type": "address"
-			}
-		],
-		"name": "return_pool",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			},
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			},
-			{
-				"components": [
-					{
-						"internalType": "string",
-						"name": "opt_title",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "opt_desc",
-						"type": "string"
-					},
-					{
-						"internalType": "int256",
-						"name": "num_votes",
-						"type": "int256"
-					}
-				],
-				"internalType": "struct VoteOption[]",
-				"name": "",
-				"type": "tuple[]"
-			}
-		],
-		"stateMutability": "view",
 		"type": "function"
 	}
 ]
