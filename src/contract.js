@@ -1,33 +1,11 @@
 // 1. Declare global variable to store the smart contract instance
 let SystemContract;
 
+let cima = "0xd184F4800EF1848fB6C927612d75C483Fc1C57D7"
+let baixo = "0x69f7e3429F5A9d20D7804e681149d7aC20426d21"
 // 2. Set contract address and ABI
-const System_Contract_Address = "0xd184F4800EF1848fB6C927612d75C483Fc1C57D7";
+const System_Contract_Address = baixo;
 const System_Contract_ABI = [
-	{
-		"inputs": [],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
-		"anonymous": false,
-		"inputs": [],
-		"name": "poolStatusUpdated",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "pool_addr",
-				"type": "address"
-			}
-		],
-		"name": "pool_create_confirm",
-		"type": "event"
-	},
 	{
 		"inputs": [
 			{
@@ -44,25 +22,6 @@ const System_Contract_ABI = [
 		"name": "add_vote",
 		"outputs": [],
 		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "admins",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -129,6 +88,30 @@ const System_Contract_ABI = [
 		"name": "create_pool",
 		"outputs": [],
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "admins",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -293,13 +276,10 @@ const createNewPool = () => {
 
 async function getPools(){
 	document.getElementById("poolitens").innerHTML = ""
-	let pools_ret = "";
+	let pools_ret;
 	let aux = await SystemContract.len_pool_list().catch((err) => {alert(err.message);});
 	len = aux.toNumber();
 	// console.log("tam: ", len);
-	if(len == 0){
-		pools_ret = noPools();
-	}
 
 	for(i=len-1; i >= 0; i--){
 		let pool_pos = i;
@@ -356,13 +336,6 @@ async function getPools(){
 
 //
 
-function noPools(){
-	return `
-		<div>
-			No pools added yet
-		</div>
-	`
-}
 
 function addOpenPool(pool_addr, pool_pos, var_title, var_desc, var_opt1_title, var_opt1_desc, var_opt2_title, var_opt2_desc, var_opt3_title, var_opt3_desc){
 	return `
@@ -439,18 +412,3 @@ async function ChangeStatus(pool_pos){
 	console.log("Changing status on addr:", addr);
 	SystemContract.change_pool_status(addr).catch((err) => {alert(err.message);});
 }
-
-async function eventUpdateStatus(){
-	SystemContract.on("pool_status_updated", function(){
-		alert("pool status updated");
-		togglePage("Openpools"); // Recarrega a página de pools aberta
-	})
-}
-
-async function eventPoolCreateConfirm(){
-	SystemContract.on("pool_create_confirm", function(){
-		alert("new pool has been added");
-		togglePage("Openpools"); // Recarrega a página de pools aberta
-	})
-}
-
