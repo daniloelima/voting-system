@@ -1,8 +1,14 @@
 // 1. Declare global variable to store the smart contract instance
 let SystemContract;
 
+let cima = "0xd184F4800EF1848fB6C927612d75C483Fc1C57D7"
+let baixo = "0x69f7e3429F5A9d20D7804e681149d7aC20426d21"
 // 2. Set contract address and ABI
+<<<<<<< Updated upstream
 const System_Contract_Address = "0xdF7453B7D9b570B514118A0Ac7558DC402821086";
+=======
+const System_Contract_Address = baixo;
+>>>>>>> Stashed changes
 const System_Contract_ABI = [
 	{
 		"inputs": [
