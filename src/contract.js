@@ -2,13 +2,8 @@
 let SystemContract;
 
 // 2. Set contract address and ABI
-const System_Contract_Address = "0x9d83e140330758a8fFD07F8Bd73e86ebcA8a5692";
+const System_Contract_Address = "0xdF7453B7D9b570B514118A0Ac7558DC402821086";
 const System_Contract_ABI = [
-	{
-		"inputs": [],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
 	{
 		"inputs": [
 			{
@@ -25,25 +20,6 @@ const System_Contract_ABI = [
 		"name": "add_vote",
 		"outputs": [],
 		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "admins",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -110,6 +86,30 @@ const System_Contract_ABI = [
 		"name": "create_pool",
 		"outputs": [],
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "admins",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -250,13 +250,13 @@ const createNewPool = () => {
     const opt3_desc  = document.getElementById("desc3").value;
     const optionslist = [
 		[
-			opt1_title, opt1_desc, 0
+			opt1_title, opt1_desc, "0"
 		],
 		[
-			opt2_title, opt2_desc, 0
+			opt2_title, opt2_desc, "0"
 		],
 		[
-			opt3_title, opt3_desc, 0
+			opt3_title, opt3_desc, "0"
 		]
     ];
     
@@ -270,3 +270,10 @@ const createNewPool = () => {
 			alert("Error message" + err.message);
         });
 };
+
+
+async function getPools(){
+	let aux = await SystemContract.len_pool_list().catch((err) => {alert(err.message);});
+	
+	console.log("saida", aux);
+}
