@@ -33,6 +33,10 @@ function togglePage(id) {
     document.getElementById("Closedpools").style.display      = 'none';
 
     document.getElementById(id).style.display           = 'block';
+
+    if(id == "Openpools"){
+      getPools();
+    }
 }
 
 
