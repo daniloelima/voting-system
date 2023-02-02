@@ -347,7 +347,7 @@ async function getPools(){
 		if(status == true){
 			ret = addOpenPool(pool_addr, pool_pos, title, desc, opt1_title, opt1_desc, opt2_title, opt2_desc, opt3_title, opt3_desc);
 		}else{
-			ret = addClosedPool(pool_addr, pool_pos, title, desc, opt1_title, opt1_desc, opt1_votes, opt2_title, opt2_desc, opt2_votes, opt3_title, opt3_desc, opt1_votes);
+			ret = addClosedPool(pool_addr, pool_pos, title, desc, opt1_title, opt1_desc, opt1_votes, opt2_title, opt2_desc, opt2_votes, opt3_title, opt3_desc, opt3_votes);
 		}
 		pools_ret += ret;
 	}	
