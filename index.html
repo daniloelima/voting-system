@@ -1,0 +1,52 @@
+HTML
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <link rel="stylesheet" href="src/style.css">
+  <link rel="stylesheet" href="src/openpools.css">
+  <title>Turing DApp</title>
+</head>
+
+<body>
+
+  <div class="sidenav">
+    <a href="#home" onclick="togglePage('Home')"><h1>Home Page</h1></a>
+    <!-- TO DO renomear para openpools assim que closed pools estiver funcionando -->
+    <a href="#open" onclick="togglePage('Openpools')">All Pools</a>
+    <a href="#create" onclick="togglePage('Createpools')">Create Pools</a>
+    <!-- TO DO fazer a pagina funciona e corrigir open pools -->
+    <!-- <a href="#closed" onclick="togglePage('Closedpools')">Closed Pools</a> -->
+  </div>
+  
+  <div class="main">
+    <br>
+    <br>
+    <div class="extern">
+      <div class="Home" id="Home">
+        <div w3-include-html="src/home.html"></div>
+      </div>
+      <div class="Open Pools" id="Openpools">
+        <div w3-include-html="src/openpools.html"></div>
+      </div>
+      <div class="Create Pools" id="Createpools">
+        <div w3-include-html="src/createpools.html"></div>
+      </div>
+      <div class="Closed" id="Closedpools">
+        <div w3-include-html="src/closedpools.html"></div>
+      </div>
+    </div>
+  </div>
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+    <script src="src/script.js"></script>
+    <script>
+      includeHTML();
+      togglePage('Home');
+    </script>
+    <script src="src/contract.js"></script>
+  </body>
+
+</html>
