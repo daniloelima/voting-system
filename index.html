@@ -15,9 +15,11 @@ HTML
 
   <div class="sidenav">
     <a href="#home" onclick="togglePage('Home')"><h1>Home Page</h1></a>
-    <a href="#open" onclick="togglePage('Openpools')">Open Pools</a>
+    <!-- TO DO renomear para openpools assim que closed pools estiver funcionando -->
+    <a href="#open" onclick="togglePage('Openpools')">All Pools</a>
     <a href="#create" onclick="togglePage('Createpools')">Create Pools</a>
-    <a href="#statistics" onclick="togglePage('Stats')">Statistics</a>
+    <!-- TO DO fazer a pagina funciona e corrigir open pools -->
+    <!-- <a href="#closed" onclick="togglePage('Closedpools')">Closed Pools</a> -->
   </div>
   
   <div class="main">
@@ -33,8 +35,8 @@ HTML
       <div class="Create Pools" id="Createpools">
         <div w3-include-html="src/createpools.html"></div>
       </div>
-      <div class="Stats" id="Stats">
-        <div w3-include-html="src/stats.html"></div>
+      <div class="Closed" id="Closedpools">
+        <div w3-include-html="src/closedpools.html"></div>
       </div>
     </div>
   </div>
@@ -42,6 +44,7 @@ HTML
     <script src="src/script.js"></script>
     <script>
       includeHTML();
+      togglePage('Home');
     </script>
     <script src="src/contract.js"></script>
   </body>
